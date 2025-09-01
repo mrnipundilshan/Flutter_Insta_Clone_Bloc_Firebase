@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/features/auth/presentaion/pages/login_page.dart';
 import 'package:insta_clone/firebase_options.dart';
+import 'package:insta_clone/themes/light_mode.dart';
 
 void main() async {
   //firebase setup
@@ -17,7 +18,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: lightMode,
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );

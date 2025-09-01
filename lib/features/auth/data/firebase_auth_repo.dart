@@ -61,7 +61,6 @@ class FirebaseAuthRepo implements AuthRepository {
       );
 
       //return user
-
       return user;
     } catch (e) {
       //catch any errors..

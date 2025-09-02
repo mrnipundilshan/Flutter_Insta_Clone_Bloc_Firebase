@@ -7,8 +7,10 @@
 if uesr doesnt has account yet, they can go register page to from here to create one */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_login_button.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
+import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -24,6 +26,50 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // register button pressed
+  void register() {
+    //prepare info
+    final String name = nameController.text;
+    final String email = emailController.text;
+    final String password = passwordController.text;
+    final String confirmPassword = confirmPasswordController.text;
+
+    //auth cubit
+    final authCubit = context.read<AuthCubit>();
+
+    //ensure the fields aren't empty
+    if (email.isNotEmpty &&
+        name.isNotEmpty &&
+        password.isNotEmpty &&
+        confirmPassword.isNotEmpty) {
+      //ensure passwords match
+      if (password == confirmPassword) {
+        authCubit.register(name, email, password);
+      }
+      //password don't match
+      else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Password do not match")));
+      }
+    }
+    //fields are empty -> display error
+    else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please complete all fields")));
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 const SizedBox(height: 25),
                 //login
-                MyButton(onTap: () {}, text: "Register"),
+                MyButton(onTap: register, text: "Register"),
 
                 const SizedBox(height: 50),
 

@@ -14,18 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("home"),
-        actions: [
-          //logout button
-          IconButton(
-            onPressed: () {
-              context.read<AuthCubit>().logout();
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text("home")),
       drawer: MyDrawer(),
     );
   }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/data/firebase_auth_repo.dart';
 import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/auth/presentaion/cubit/auth_states.dart';
 import 'package:insta_clone/features/auth/presentaion/pages/auth_page.dart';
+import 'package:insta_clone/features/post/presentation/pages/home_page.dart';
 import 'package:insta_clone/themes/light_mode.dart';
 
 /*
@@ -39,7 +41,25 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightMode,
-        home: const AuthPage(),
+        home: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {},
+          builder: (context, authstate) {
+            print(authstate);
+            //if unauthenticated -> auth page (login/register)
+            if (authstate is Unauthenticated) {
+              return const AuthPage();
+            }
+            if (authstate is Authenticated) {
+              return const HomePage();
+            }
+            //loading
+            else {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+          },
+        ),
       ),
     );
   }

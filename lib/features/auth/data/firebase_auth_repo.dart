@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
 import 'package:insta_clone/features/auth/domain/repository/auth_repository.dart';
 
 class FirebaseAuthRepo implements AuthRepository {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   @override
   Future<AppUser?> loginWithEmailPassword(String email, String password) async {
     try {
@@ -59,6 +60,12 @@ class FirebaseAuthRepo implements AuthRepository {
         email: email,
         name: name,
       );
+
+      //save user data in firestore
+      await firebaseFirestore
+          .collection("users")
+          .doc(user.email)
+          .set(user.toJson());
 
       //return user
       return user;

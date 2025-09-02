@@ -1,16 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_clone/features/auth/data/firebase_auth_repo.dart';
+import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/auth/presentaion/pages/auth_page.dart';
 import 'package:insta_clone/themes/light_mode.dart';
 
+/*
+  App - Root Level
+
+  Repository: for the database
+    - firebase
+
+  Bloc Providers: for state management
+    - auth
+    - profile
+    - post
+    - search
+    - theme
+  
+  check Auth State
+    - unauthenticated -> auth page (login/register)
+    - authenticated -> home page
+
+
+*/
+
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  // auth repo
+  final authRepo = FirebaseAuthRepo();
+
+  MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: lightMode,
-      debugShowCheckedModeBanner: false,
-      home: const AuthPage(),
+    //provide cubit to app
+    return BlocProvider(
+      create: (context) => AuthCubit(authRepository: authRepo)..checkAuth(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: lightMode,
+        home: const AuthPage(),
+      ),
     );
   }
 }

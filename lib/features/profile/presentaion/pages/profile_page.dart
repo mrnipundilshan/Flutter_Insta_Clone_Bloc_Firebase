@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
+import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -8,8 +11,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // cubits
+  late final authCubit = context.read<AuthCubit>();
+
+  // current user
+  late AppUser? currentUser = authCubit.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: Text(currentUser!.email), centerTitle: true),
+    );
   }
 }

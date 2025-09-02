@@ -4,7 +4,7 @@ import 'package:insta_clone/features/auth/data/firebase_auth_repo.dart';
 import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/auth/presentaion/cubit/auth_states.dart';
 import 'package:insta_clone/features/auth/presentaion/pages/auth_page.dart';
-import 'package:insta_clone/features/post/presentation/pages/home_page.dart';
+import 'package:insta_clone/features/home/presentation/pages/home_page.dart';
 import 'package:insta_clone/themes/light_mode.dart';
 
 /*

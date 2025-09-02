@@ -10,16 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_login_button.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   //textcontrollers
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -45,9 +47,9 @@ class _LoginPageState extends State<LoginPage> {
 
                 SizedBox(height: height * 0.03),
 
-                //welcomback message
+                //create account message
                 Text(
-                  "Welcome back, you've been missed!",
+                  "Let's create an account for you",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: width * 0.04,
@@ -55,6 +57,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 const SizedBox(height: 20),
+
+                //email textfiled
+                MyTextField(
+                  controller: nameController,
+                  hintText: "Name",
+                  obsecureText: false,
+                ),
+
+                const SizedBox(height: 10),
 
                 //email textfiled
                 MyTextField(
@@ -68,18 +79,27 @@ class _LoginPageState extends State<LoginPage> {
                 //pw textfield
                 MyTextField(
                   controller: passwordController,
-                  hintText: "Email",
+                  hintText: "Password",
+                  obsecureText: true,
+                ),
+
+                const SizedBox(height: 10),
+
+                //confirm pw textfield
+                MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: "Confirm Password",
                   obsecureText: true,
                 ),
 
                 const SizedBox(height: 25),
                 //login
-                MyButton(onTap: () {}, text: "Log In"),
+                MyButton(onTap: () {}, text: "Register"),
 
                 const SizedBox(height: 50),
                 //not a member? register now
                 Text(
-                  "Not a member? Register now",
+                  "Already a member? Login",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),

@@ -7,8 +7,10 @@
 if uesr doesnt has account yet, they can go register page to from here to create one */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_login_button.dart';
 import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
+import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -22,6 +24,35 @@ class _LoginPageState extends State<LoginPage> {
   //textcontrollers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  //login button pressed
+  void login() {
+    // prepare email & password
+    final String email = emailController.text;
+    final String password = passwordController.text;
+
+    //auth cubit
+    final authCubit = context.read<AuthCubit>();
+
+    //ensure that the email & password fileds are not empty
+    if (email.isNotEmpty && password.isNotEmpty) {
+      //login
+      authCubit.login(email, password);
+    }
+    //display error if some  fields are empty
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter both email and password")),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                 //pw textfield
                 MyTextField(
                   controller: passwordController,
-                  hintText: "Email",
+                  hintText: "Password",
                   obsecureText: true,
                 ),
 

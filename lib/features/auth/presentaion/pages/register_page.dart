@@ -11,7 +11,8 @@ import 'package:insta_clone/features/auth/presentaion/components/my_login_button
 import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final void Function()? togglePages;
+  const RegisterPage({super.key, required this.togglePages});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -97,12 +98,28 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyButton(onTap: () {}, text: "Register"),
 
                 const SizedBox(height: 50),
+
                 //not a member? register now
-                Text(
-                  "Already a member? Login",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already a member?",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: widget.togglePages,
+                      child: Text(
+                        " Login",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

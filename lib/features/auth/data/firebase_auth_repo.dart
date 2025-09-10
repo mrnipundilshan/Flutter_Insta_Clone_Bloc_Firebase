@@ -27,6 +27,7 @@ class FirebaseAuthRepo implements AuthRepository {
     catch (e) {
       Exception("Login failed: $e");
     }
+    return null;
   }
 
   @override
@@ -64,7 +65,7 @@ class FirebaseAuthRepo implements AuthRepository {
       //save user data in firestore
       await firebaseFirestore
           .collection("users")
-          .doc(user.email)
+          .doc(user.uid)
           .set(user.toJson());
 
       //return user

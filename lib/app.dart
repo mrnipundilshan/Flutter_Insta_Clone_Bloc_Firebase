@@ -7,6 +7,7 @@ import 'package:insta_clone/features/auth/presentaion/pages/auth_page.dart';
 import 'package:insta_clone/features/home/presentation/pages/home_page.dart';
 import 'package:insta_clone/features/profile/data/firebase_profile_repo.dart';
 import 'package:insta_clone/features/profile/presentaion/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/storage/data/firebase_storage_repo.dart';
 import 'package:insta_clone/themes/light_mode.dart';
 
 /*
@@ -31,10 +32,13 @@ import 'package:insta_clone/themes/light_mode.dart';
 
 class MainApp extends StatelessWidget {
   // auth repo
-  final authRepo = FirebaseAuthRepo();
+  final firebaseauthRepo = FirebaseAuthRepo();
 
   // profile repo
-  final profileRepo = FirebaseProfileRepo();
+  final firebaseprofileRepo = FirebaseProfileRepo();
+
+  // storage repo
+  final firebasestorageRepo = FirebaseStorageRepo();
 
   MainApp({super.key});
 
@@ -45,12 +49,16 @@ class MainApp extends StatelessWidget {
       providers: [
         // auth cubit
         BlocProvider(
-          create: (context) => AuthCubit(authRepository: authRepo)..checkAuth(),
+          create: (context) =>
+              AuthCubit(authRepository: firebaseauthRepo)..checkAuth(),
         ),
 
         // profile cubit
         BlocProvider(
-          create: (context) => ProfileCubit(profileRepo: profileRepo),
+          create: (context) => ProfileCubit(
+            profileRepo: firebaseprofileRepo,
+            storageRepo: firebasestorageRepo,
+          ),
         ),
       ],
       child: MaterialApp(

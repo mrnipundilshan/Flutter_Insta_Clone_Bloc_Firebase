@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   //
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     //load user profile data
@@ -34,32 +34,72 @@ class _ProfilePageState extends State<ProfilePage> {
   //build ui
   @override
   Widget build(BuildContext context) {
-  // Scaffold
-  return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state){
-    //loaded
-    if (state is ProfileLoaded){
-      // get the loaded user
-      final user = state.profileUser;
+    // Scaffold
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        //loaded
+        if (state is ProfileLoaded) {
+          // get the loaded user
+          final user = state.profileUser;
 
-      return Scaffold(
-      appBar: AppBar(title: Text(user.name), 
-      foregroundColor: Theme.of(context).colorScheme.primary,
-      centerTitle: true),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(user.name),
+              foregroundColor: Theme.of(context).colorScheme.primary,
+              centerTitle: true,
+            ),
+
+            // body
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Column(
+                  children: [
+                    // email
+                    Text(
+                      user.email,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    // profile pic
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+
+                      height: 120,
+                      width: 120,
+                      padding: const EdgeInsets.all(25),
+                      child: Center(
+                        child: Icon(
+                          Icons.person,
+                          size: 72,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+
+                    // bio box
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+        //loading
+        else if (state is ProfileLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else {
+          return const Center(child: Text("No Profile Found"));
+        }
+      },
     );
-
-    // body
-    }
-
-    //loading
-    else if(state is ProfileLoading){
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator(),),
-      );
-    } else {
-      return const Center(child: Text("No Profile Found"),);
-    }
-  
-  },
-  );
   }
 }

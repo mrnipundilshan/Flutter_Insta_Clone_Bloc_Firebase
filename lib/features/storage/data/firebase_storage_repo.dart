@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:insta_clone/features/storage/domain/storage_repo.dart';
@@ -9,15 +10,13 @@ class FirebaseStorageRepo implements StorageRepo {
   // mobile platform
   @override
   Future<String?> uploadProfileImageMobile(String path, String fileName) {
-    // TODO: implement uploadProfileImageMobile
-    throw UnimplementedError();
+    return _uploadFile(path, fileName, "profile_images");
   }
 
   // web platform
   @override
-  Future<String?> uploadProfileImageWeb(String fileBytes, String fileName) {
-    // TODO: implement uploadProfileImageWeb
-    throw UnimplementedError();
+  Future<String?> uploadProfileImageWeb(Uint8List fileBytes, String fileName) {
+    return _uploadFileBytes(fileBytes, fileName, "profile_images");
   }
 
   /* 
@@ -46,8 +45,30 @@ class FirebaseStorageRepo implements StorageRepo {
       final downloadUrl = await uploadTask.ref.getDownloadURL();
 
       return downloadUrl;
-    } catch (e) {}
+    } catch (e) {
+      return null;
+    }
   }
 
   // web platform (bytes)
+  Future<String?> _uploadFileBytes(
+    Uint8List fileBytes,
+    String fileName,
+    String folder,
+  ) async {
+    try {
+      // find place to store
+      final storgeRef = storage.ref().child('$folder/$fileName');
+
+      // upload
+      final uploadTask = await storgeRef.putData(fileBytes);
+
+      // get image download url
+      final downloadUrl = await uploadTask.ref.getDownloadURL();
+
+      return downloadUrl;
+    } catch (e) {
+      return null;
+    }
+  }
 }

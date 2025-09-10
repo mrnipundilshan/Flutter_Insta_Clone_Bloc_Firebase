@@ -74,7 +74,7 @@ class MainApp extends StatelessWidget {
             }
           },
           builder: (context, authstate) {
-            print(authstate);
+            //print(authstate);
             // if unauthenticated -> auth page (login/register)
             if (authstate is Unauthenticated) {
               return const AuthPage();

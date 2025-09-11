@@ -50,7 +50,14 @@ class _PostTileState extends State<PostTile> {
     isOwnPost = (widget.post.userId == currentUser!.uid);
   }
 
-  Future<void> fecthPostUser() async {}
+  Future<void> fecthPostUser() async {
+    final fetchedUser = await profileCubit.getUserProfile(widget.post.userId);
+    if (fetchedUser != null) {
+      setState(() {
+        postUser = fetchedUser;
+      });
+    }
+  }
 
   // show options for deletion
   void showOption() {
@@ -81,29 +88,53 @@ class _PostTileState extends State<PostTile> {
   // build ui
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // name
-            Text(widget.post.userName),
+    return Container(
+      color: Theme.of(context).colorScheme.secondary,
+      child: Column(
+        children: [
+          // Top section: profile pic / name / delete button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // profile pic
+              postUser?.profileImageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: postUser!.profileImageUrl,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.person),
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const Icon(Icons.person),
 
-            // delete button
-            IconButton(onPressed: showOption, icon: const Icon(Icons.delete)),
-          ],
-        ),
+              // name
+              Text(widget.post.userName),
 
-        // image
-        CachedNetworkImage(
-          imageUrl: widget.post.imageUrl,
-          height: 430,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => const SizedBox(height: 430),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-        ),
-      ],
+              // delete button
+              IconButton(onPressed: showOption, icon: const Icon(Icons.delete)),
+            ],
+          ),
+
+          // image
+          CachedNetworkImage(
+            imageUrl: widget.post.imageUrl,
+            height: 430,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => const SizedBox(height: 430),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+        ],
+      ),
     );
   }
 }

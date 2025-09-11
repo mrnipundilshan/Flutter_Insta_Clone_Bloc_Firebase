@@ -1,4 +1,11 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/post/domain/entities/post.dart';
+import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 
 class UploadPostPage extends StatefulWidget {
   const UploadPostPage({super.key});
@@ -8,8 +15,94 @@ class UploadPostPage extends StatefulWidget {
 }
 
 class _UploadPostPageState extends State<UploadPostPage> {
+  // mobile image pick
+  PlatformFile? imagePickedFile;
+
+  // web image pick
+  Uint8List? webImage;
+
+  // text controller -> caption
+  final textController = TextEditingController();
+
+  // current user
+  AppUser? currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+  }
+
+  // get current user
+  void getCurrentUser() async {
+    final authCubit = context.read<AuthCubit>();
+    currentUser = authCubit.currentUser;
+  }
+
+  // pick image
+  Future<void> pickImage() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      withData: kIsWeb,
+    );
+
+    if (result != null) {
+      setState(() {
+        imagePickedFile = result.files.first;
+
+        if (kIsWeb) {
+          webImage = imagePickedFile!.bytes;
+        }
+      });
+    }
+  }
+
+  // cretae & upload post
+  void uploadPosr() {
+    // check if both image and caption are provided
+    if (imagePickedFile == null || textController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Both image and caption are required")),
+      );
+    }
+
+    // create a new post object
+    final newPost = Post(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      userId: currentUser!.uid,
+      userName: currentUser!.name,
+      text: textController.text,
+      imageUrl: '',
+      timestamp: DateTime.now(),
+    );
+
+    // post cubit
+    final postCubit = context.read<PostCubit>();
+
+    // web uplaod
+    if (kIsWeb) {
+      postCubit.createPost(newPost, imageBytes: imagePickedFile?.bytes);
+    }
+    // mobile upload]
+    else {
+      postCubit.createPost(newPost, imagePath: imagePickedFile?.path);
+    }
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Create Post"),
+        foregroundColor: Theme.of(context).colorScheme.primary,
+      ),
+    );
   }
 }

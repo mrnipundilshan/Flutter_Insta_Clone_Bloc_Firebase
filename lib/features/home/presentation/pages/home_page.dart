@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Home"),
         centerTitle: true,
+        foregroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           // upload new posts
           IconButton(

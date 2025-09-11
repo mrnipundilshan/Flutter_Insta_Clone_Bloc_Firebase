@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Post {
   final String id;
   final String userId;
   final String userName;
   final String text;
   final String imageUrl;
-  final String timestamp;
+  final DateTime timestamp;
 
   Post({
     required this.id,
@@ -23,6 +25,30 @@ class Post {
       text: text,
       imageUrl: imageUrl ?? this.imageUrl,
       timestamp: timestamp,
+    );
+  }
+
+  // convert post -> json
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'name': userName,
+      'text': text,
+      'imageUrl': imageUrl,
+      'timestamp': Timestamp.fromDate(timestamp),
+    };
+  }
+
+  // convert json -> post
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'],
+      userId: json['userId'],
+      userName: json['name'],
+      text: json['text'],
+      imageUrl: json['imageUrl'],
+      timestamp: (json['timestamp'] as Timestamp).toDate(),
     );
   }
 }

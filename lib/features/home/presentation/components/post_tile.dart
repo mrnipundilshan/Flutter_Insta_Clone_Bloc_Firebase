@@ -93,35 +93,55 @@ class _PostTileState extends State<PostTile> {
       child: Column(
         children: [
           // Top section: profile pic / name / delete button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // profile pic
-              postUser?.profileImageUrl != null
-                  ? CachedNetworkImage(
-                      imageUrl: postUser!.profileImageUrl,
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.person),
-                      imageBuilder: (context, imageProvider) => Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // profile pic
+                postUser?.profileImageUrl != null
+                    ? CachedNetworkImage(
+                        imageUrl: postUser!.profileImageUrl,
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.person),
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : const Icon(Icons.person),
+                      )
+                    : const Icon(Icons.person),
 
-              // name
-              Text(widget.post.userName),
+                const SizedBox(width: 10),
 
-              // delete button
-              IconButton(onPressed: showOption, icon: const Icon(Icons.delete)),
-            ],
+                // name
+                Text(
+                  widget.post.userName,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const Spacer(),
+
+                // delete button
+                if (isOwnPost)
+                  GestureDetector(
+                    onTap: showOption,
+                    child: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+              ],
+            ),
           ),
 
           // image
@@ -132,6 +152,31 @@ class _PostTileState extends State<PostTile> {
             fit: BoxFit.cover,
             placeholder: (context, url) => const SizedBox(height: 430),
             errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+
+          // buttons -> like, comment, timestamp
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                // like button
+                Icon(Icons.favorite_border),
+
+                Text("0"),
+
+                const SizedBox(width: 20),
+
+                // comment button
+                Icon(Icons.comment),
+
+                Text("0"),
+
+                const Spacer(),
+
+                // timestamp
+                Text(widget.post.timestamp.toString()),
+              ],
+            ),
           ),
         ],
       ),

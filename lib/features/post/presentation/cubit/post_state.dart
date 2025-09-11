@@ -25,6 +25,6 @@ class PostsError extends PostState {
 
 //loaded
 class PostsLoaded extends PostState {
-  final List<Post> Posts;
-  PostsLoaded(this.Posts);
+  final List<Post> posts;
+  PostsLoaded(this.posts);
 }

@@ -5,6 +5,8 @@ import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/auth/presentation/cubit/auth_states.dart';
 import 'package:insta_clone/features/auth/presentation/pages/auth_page.dart';
 import 'package:insta_clone/features/home/presentation/pages/home_page.dart';
+import 'package:insta_clone/features/post/data/firebase_post_repo.dart';
+import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/profile/data/firebase_profile_repo.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/storage/data/firebase_storage_repo.dart';
@@ -40,6 +42,9 @@ class MainApp extends StatelessWidget {
   // storage repo
   final firebasestorageRepo = FirebaseStorageRepo();
 
+  // post repo
+  final firebasePostRepo = FirebasePostRepo();
+
   MainApp({super.key});
 
   @override
@@ -60,6 +65,14 @@ class MainApp extends StatelessWidget {
             storageRepo: firebasestorageRepo,
           ),
         ),
+
+        //post cubit
+        BlocProvider(
+          create: (context) => PostCubit(
+            postRepo: firebasePostRepo,
+            storageRepo: firebasestorageRepo,
+          ),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -74,7 +87,7 @@ class MainApp extends StatelessWidget {
             }
           },
           builder: (context, authstate) {
-            //print(authstate);
+            print(authstate);
             // if unauthenticated -> auth page (login/register)
             if (authstate is Unauthenticated) {
               return const AuthPage();

@@ -41,6 +41,9 @@ class PostCubit extends Cubit<PostState> {
 
       // create post in backend
       postRepo.createPost(newPost);
+
+      // re-fetch all posts
+      fetchAllPosts();
     } catch (e) {
       emit(PostsError("failed to create post: $e"));
     }

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/home/presentation/components/my_drawer.dart';
@@ -79,7 +78,10 @@ class _HomePageState extends State<HomePage> {
                 final post = allPosts[index];
 
                 // image
-                return PostTile(post: post);
+                return PostTile(
+                  post: post,
+                  onDeletePressed: () => deletePost(post.id),
+                );
               },
             );
           }

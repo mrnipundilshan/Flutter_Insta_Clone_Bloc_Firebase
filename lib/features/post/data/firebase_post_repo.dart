@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:insta_clone/features/post/domain/entities/post.dart';
-import 'package:insta_clone/features/post/domain/entities/post_repo.dart';
+import 'package:insta_clone/features/post/domain/repos/post_repo.dart';
 
 class FirebasePostRepo implements PostRepo {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/post/domain/entities/post.dart';
-import 'package:insta_clone/features/post/domain/entities/post_repo.dart';
+import 'package:insta_clone/features/post/domain/repos/post_repo.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/storage/domain/storage_repo.dart';
 

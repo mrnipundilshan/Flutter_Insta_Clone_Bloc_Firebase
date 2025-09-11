@@ -42,7 +42,7 @@ class PostCubit extends Cubit<PostState> {
       // create post in backend
       postRepo.createPost(newPost);
     } catch (e) {
-      throw Exception("failed to create post: $e");
+      emit(PostsError("failed to create post: $e"));
     }
   }
 
@@ -54,6 +54,15 @@ class PostCubit extends Cubit<PostState> {
       emit(PostsLoaded(posts));
     } catch (e) {
       emit(PostsError("Failed to fetch posts: $e"));
+    }
+  }
+
+  // delete a post
+  Future<void> deletePost(String postId) async {
+    try {
+      await postRepo.deletePost(postId);
+    } catch (e) {
+      emit(PostsError("Not deleted"));
     }
   }
 }

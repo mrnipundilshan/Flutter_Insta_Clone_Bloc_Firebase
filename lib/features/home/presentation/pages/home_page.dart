@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/features/home/presentation/components/my_drawer.dart';
+import 'package:insta_clone/features/post/presentation/pages/upload_post_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +13,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home"), centerTitle: true),
+      appBar: AppBar(
+        title: Text("Home"),
+        centerTitle: true,
+        actions: [
+          // upload new posts
+          IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UploadPostPage()),
+            ),
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+
+      // drawer
       drawer: MyDrawer(),
     );
   }

@@ -1,11 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
-import 'package:insta_clone/features/profile/presentaion/components/bio_box.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_cubit.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_state.dart';
-import 'package:insta_clone/features/profile/presentaion/pages/edit_profile_page.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/components/bio_box.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
+import 'package:insta_clone/features/profile/presentation/pages/edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -77,20 +78,30 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 25),
 
                 // profile pic
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(12),
+                CachedNetworkImage(
+                  imageUrl: user.profileImageUrl,
+
+                  // loading
+                  placeholder: (contextm, url) =>
+                      const CircularProgressIndicator(),
+
+                  // error -> failed to load
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.person,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 72,
                   ),
 
-                  height: 120,
-                  width: 120,
-                  padding: const EdgeInsets.all(25),
-                  child: Center(
-                    child: Icon(
-                      Icons.person,
-                      size: 72,
-                      color: Theme.of(context).colorScheme.primary,
+                  // loaded
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -103,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Row(
                     children: [
                       Text(
-                        "bio",
+                        "Bio",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),

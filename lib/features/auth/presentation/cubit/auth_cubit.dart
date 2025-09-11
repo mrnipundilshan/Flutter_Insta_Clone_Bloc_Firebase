@@ -3,7 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
 import 'package:insta_clone/features/auth/domain/repository/auth_repository.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_states.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_states.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;

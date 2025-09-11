@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/profile/domain/repository/profile_repo.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_state.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 import 'package:insta_clone/features/storage/domain/storage_repo.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {

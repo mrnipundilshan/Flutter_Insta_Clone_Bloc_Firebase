@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/home/presentation/components/my_drawer_tile.dart';
-import 'package:insta_clone/features/profile/presentaion/pages/profile_page.dart';
+import 'package:insta_clone/features/profile/presentation/pages/profile_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -51,7 +51,9 @@ class MyDrawer extends StatelessWidget {
                   // navigating to the profile page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProfilePage(uid: uid,)),
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(uid: uid),
+                    ),
                   );
                 },
               ),

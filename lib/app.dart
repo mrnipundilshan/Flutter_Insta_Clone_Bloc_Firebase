@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/data/firebase_auth_repo.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_states.dart';
-import 'package:insta_clone/features/auth/presentaion/pages/auth_page.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_states.dart';
+import 'package:insta_clone/features/auth/presentation/pages/auth_page.dart';
 import 'package:insta_clone/features/home/presentation/pages/home_page.dart';
 import 'package:insta_clone/features/profile/data/firebase_profile_repo.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/storage/data/firebase_storage_repo.dart';
 import 'package:insta_clone/themes/light_mode.dart';
 

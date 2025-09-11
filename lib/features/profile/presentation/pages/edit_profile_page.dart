@@ -5,10 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
+import 'package:insta_clone/features/auth/presentation/components/my_text_field.dart';
 import 'package:insta_clone/features/profile/domain/entities/profile_user.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_cubit.dart';
-import 'package:insta_clone/features/profile/presentaion/cubits/profile_state.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 
 class EditProfilePage extends StatefulWidget {
   final ProfileUser user;
@@ -126,14 +126,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 color: Theme.of(context).colorScheme.secondary,
                 shape: BoxShape.circle,
               ),
+              clipBehavior: Clip.hardEdge,
               child:
                   // display selected image for mobile
                   (!kIsWeb && imagePickedFile != null)
-                  ? Image.file(File(imagePickedFile!.path!))
+                  ? Image.file(File(imagePickedFile!.path!), fit: BoxFit.cover)
                   :
                     // display selected image for web
                     (kIsWeb && webImage != null)
-                  ? Image.memory(webImage!)
+                  ? Image.memory(webImage!, fit: BoxFit.cover)
                   :
                     // mo image selected -> display existing profile pic
                     CachedNetworkImage(
@@ -152,7 +153,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       // loaded
                       imageBuilder: (context, imageProvider) =>
-                          Image(image: imageProvider),
+                          Image(image: imageProvider, fit: BoxFit.cover),
                     ),
             ),
           ),

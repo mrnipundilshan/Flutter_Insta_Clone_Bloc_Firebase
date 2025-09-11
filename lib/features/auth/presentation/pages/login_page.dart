@@ -8,66 +8,49 @@ if uesr doesnt has account yet, they can go register page to from here to create
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_clone/features/auth/presentaion/components/my_login_button.dart';
-import 'package:insta_clone/features/auth/presentaion/components/my_text_field.dart';
-import 'package:insta_clone/features/auth/presentaion/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/auth/presentation/components/my_login_button.dart';
+import 'package:insta_clone/features/auth/presentation/components/my_text_field.dart';
+import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
-  const RegisterPage({super.key, required this.togglePages});
+  const LoginPage({super.key, required this.togglePages});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   //textcontrollers
   final emailController = TextEditingController();
-  final nameController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // register button pressed
-  void register() {
-    //prepare info
-    final String name = nameController.text;
+  //login button pressed
+  void login() {
+    // prepare email & password
     final String email = emailController.text;
     final String password = passwordController.text;
-    final String confirmPassword = confirmPasswordController.text;
 
     //auth cubit
     final authCubit = context.read<AuthCubit>();
 
-    //ensure the fields aren't empty
-    if (email.isNotEmpty &&
-        name.isNotEmpty &&
-        password.isNotEmpty &&
-        confirmPassword.isNotEmpty) {
-      //ensure passwords match
-      if (password == confirmPassword) {
-        authCubit.register(name, email, password);
-      }
-      //password don't match
-      else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("Password do not match")));
-      }
+    //ensure that the email & password fileds are not empty
+    if (email.isNotEmpty && password.isNotEmpty) {
+      //login
+      authCubit.login(email, password);
     }
-    //fields are empty -> display error
+    //display error if some  fields are empty
     else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Please complete all fields")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter both email and password")),
+      );
     }
   }
 
   @override
   void dispose() {
-    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -94,9 +77,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 SizedBox(height: height * 0.03),
 
-                //create account message
+                //welcomback message
                 Text(
-                  "Let's create an account for you",
+                  "Welcome back, you've been missed!",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: width * 0.04,
@@ -104,15 +87,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 const SizedBox(height: 20),
-
-                //email textfiled
-                MyTextField(
-                  controller: nameController,
-                  hintText: "Name",
-                  obsecureText: false,
-                ),
-
-                const SizedBox(height: 10),
 
                 //email textfiled
                 MyTextField(
@@ -130,27 +104,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   obsecureText: true,
                 ),
 
-                const SizedBox(height: 10),
-
-                //confirm pw textfield
-                MyTextField(
-                  controller: confirmPasswordController,
-                  hintText: "Confirm Password",
-                  obsecureText: true,
-                ),
-
                 const SizedBox(height: 25),
                 //login
-                MyButton(onTap: register, text: "Register"),
+                MyButton(onTap: login, text: "Log In"),
 
                 const SizedBox(height: 50),
-
                 //not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already a member?",
+                      "Not a member?",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -158,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     GestureDetector(
                       onTap: widget.togglePages,
                       child: Text(
-                        " Login",
+                        " Register now",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,
                           fontWeight: FontWeight.bold,

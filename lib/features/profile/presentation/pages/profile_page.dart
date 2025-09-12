@@ -13,6 +13,7 @@ import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.d
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 import 'package:insta_clone/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:insta_clone/features/profile/presentation/pages/follower_page.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -95,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
           // get the loaded user
           final user = state.profileUser;
 
-          return Scaffold(
+          return ConstrainedScaffold(
             appBar: AppBar(
               title: Text(user.name),
               foregroundColor: Theme.of(context).colorScheme.primary,

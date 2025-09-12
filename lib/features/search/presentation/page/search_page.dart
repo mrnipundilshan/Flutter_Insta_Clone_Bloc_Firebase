@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_clone/features/profile/presentation/pages/user_tile.dart';
+import 'package:insta_clone/features/profile/presentation/components/user_tile.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_cubit.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_state.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -36,15 +37,31 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     // scaffold
-    return Scaffold(
+    return ConstrainedScaffold(
       // App Bar
       appBar: AppBar(
+        foregroundColor: Theme.of(context).colorScheme.primary,
         // search app field
         title: TextField(
           controller: searchController,
           decoration: InputDecoration(
             hintText: "Search users..",
             hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+
+            // Change underline color when not focused
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.tertiary,
+              ), // your color here
+            ),
+
+            // Change underline color when focused
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 2,
+              ),
+            ),
           ),
         ),
       ),

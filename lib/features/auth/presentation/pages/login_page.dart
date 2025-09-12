@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/presentation/components/my_login_button.dart';
 import 'package:insta_clone/features/auth/presentation/components/my_text_field.dart';
 import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return //Scaffold
-    Scaffold(
+    ConstrainedScaffold(
       //body
       body: SafeArea(
         child: Center(

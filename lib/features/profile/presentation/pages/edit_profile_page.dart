@@ -9,6 +9,7 @@ import 'package:insta_clone/features/auth/presentation/components/my_text_field.
 import 'package:insta_clone/features/profile/domain/entities/profile_user.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class EditProfilePage extends StatefulWidget {
   final ProfileUser user;
@@ -105,7 +106,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   buildEditPage() {
-    return Scaffold(
+    return ConstrainedScaffold(
       appBar: AppBar(
         title: const Text("Edit Profile"),
         foregroundColor: Theme.of(context).colorScheme.primary,

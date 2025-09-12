@@ -4,6 +4,7 @@ import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/home/presentation/components/my_drawer_tile.dart';
 import 'package:insta_clone/features/profile/presentation/pages/profile_page.dart';
 import 'package:insta_clone/features/search/presentation/page/search_page.dart';
+import 'package:insta_clone/features/settings/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -74,7 +75,10 @@ class MyDrawer extends StatelessWidget {
               MyDrawerTile(
                 title: "S E T T I N G S",
                 icon: Icons.settings,
-                onTap: () {},
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                ),
               ),
 
               const Spacer(),

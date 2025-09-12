@@ -5,6 +5,7 @@ import 'package:insta_clone/features/post/presentation/components/post_tile.dart
 import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/post/presentation/pages/upload_post_page.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConstrainedScaffold(
       appBar: AppBar(
         title: Text("Home"),
         centerTitle: true,

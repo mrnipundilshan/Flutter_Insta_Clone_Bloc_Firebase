@@ -10,6 +10,7 @@ import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/post/domain/entities/post.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
+import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class UploadPostPage extends StatefulWidget {
   const UploadPostPage({super.key});
@@ -128,7 +129,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
 
   Widget buildUploadPage() {
     // scaffold
-    return Scaffold(
+    return ConstrainedScaffold(
       // app bar
       appBar: AppBar(
         title: const Text("Create Post"),

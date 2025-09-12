@@ -6,6 +6,7 @@ import 'package:insta_clone/features/auth/presentation/components/my_text_field.
 import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/post/domain/entities/comment.dart';
 import 'package:insta_clone/features/post/domain/entities/post.dart';
+import 'package:insta_clone/features/post/presentation/components/comment_tile.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/domain/entities/profile_user.dart';
@@ -340,23 +341,7 @@ class _PostTileState extends State<PostTile> {
                       final comment = post.comments[index];
 
                       // comment tile ui
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: [
-                            // name
-                            Text(
-                              comment.userName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-
-                            const SizedBox(width: 10),
-
-                            // comment text
-                            Text(comment.text),
-                          ],
-                        ),
-                      );
+                      return CommentTile(comment: comment);
                     },
                   );
                 }
@@ -369,7 +354,7 @@ class _PostTileState extends State<PostTile> {
               else if (state is PostsError) {
                 return Center(child: Text(state.message));
               } else {
-                return const Center(child: Text("Something went wrong.."));
+                return const SizedBox();
               }
             },
           ),

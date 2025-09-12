@@ -8,6 +8,7 @@ import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/presentation/components/bio_box.dart';
 import 'package:insta_clone/features/profile/presentation/components/follow_button.dart';
+import 'package:insta_clone/features/profile/presentation/components/profile_stats.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 import 'package:insta_clone/features/profile/presentation/pages/edit_profile_page.dart';
@@ -52,7 +53,32 @@ class _ProfilePageState extends State<ProfilePage> {
     final profileUser = profileState.profileUser;
     final isFollowing = profileUser.followers.contains(currentUser!.uid);
 
-    profileCubit.toggleFollow(currentUser!.uid, widget.uid);
+    // optimistically update ui
+    setState(() {
+      // unfollow
+      if (isFollowing) {
+        profileUser.followers.remove(currentUser!.uid);
+      }
+      // follow
+      else {
+        profileUser.followers.add(currentUser!.uid);
+      }
+    });
+
+    // perform actual toggle in cubit
+    profileCubit.toggleFollow(currentUser!.uid, widget.uid).catchError((error) {
+      // revert update if there's an error
+      setState(() {
+        // unfollow
+        if (isFollowing) {
+          profileUser.followers.add(currentUser!.uid);
+        }
+        // follow
+        else {
+          profileUser.followers.remove(currentUser!.uid);
+        }
+      });
+    });
   }
 
   //build ui
@@ -130,6 +156,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                ),
+
+                const SizedBox(height: 25),
+
+                // profile stats
+                ProfileStats(
+                  postCount: postCount,
+                  followersCount: 0,
+                  followingCount: 0,
                 ),
 
                 const SizedBox(height: 25),

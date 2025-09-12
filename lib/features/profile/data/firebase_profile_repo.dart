@@ -78,7 +78,7 @@ class FirebaseProfileRepo implements ProfileRepo {
           );
 
           // check if the current user is already following the target user
-          if (currentFollowing.contains(targetUserData)) {
+          if (currentFollowing.contains(targetUid)) {
             // unfollow
             await firebaseFirestore.collection('users').doc(currentUid).update({
               'following': FieldValue.arrayRemove([targetUid]),

@@ -7,6 +7,7 @@ import 'package:insta_clone/features/post/presentation/components/post_tile.dart
 import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/presentation/components/bio_box.dart';
+import 'package:insta_clone/features/profile/presentation/components/follow_button.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 import 'package:insta_clone/features/profile/presentation/pages/edit_profile_page.dart';
@@ -40,10 +41,26 @@ class _ProfilePageState extends State<ProfilePage> {
   // posts
   int postCount = 0;
 
+  /* follow/ unfollow */
+
+  void followButtonPressed() {
+    final profileState = profileCubit.state;
+    if (profileState is! ProfileLoaded) {
+      return; // return is profile is not loaded
+    }
+
+    final profileUser = profileState.profileUser;
+    final isFollowing = profileUser.followers.contains(currentUser!.uid);
+
+    profileCubit.toggleFollow(currentUser!.uid, widget.uid);
+  }
+
   //build ui
   @override
   Widget build(BuildContext context) {
-    // Scaffold
+    // is own post
+    bool isOwnPost = (widget.uid == currentUser!.uid);
+
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         //loaded
@@ -58,15 +75,16 @@ class _ProfilePageState extends State<ProfilePage> {
               centerTitle: true,
               actions: [
                 // edit profile button
-                IconButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfilePage(user: user),
+                if (isOwnPost)
+                  IconButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfilePage(user: user),
+                      ),
                     ),
+                    icon: const Icon(Icons.settings),
                   ),
-                  icon: const Icon(Icons.settings),
-                ),
               ],
             ),
 
@@ -113,6 +131,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 25),
+
+                // follow button
+                if (!isOwnPost)
+                  FollowButton(
+                    onPressed: followButtonPressed,
+                    isFollowing: user.followers.contains(currentUser!.uid),
+                  ),
 
                 const SizedBox(height: 25),
 

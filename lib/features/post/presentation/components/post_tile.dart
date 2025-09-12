@@ -124,7 +124,7 @@ class _PostTileState extends State<PostTile> {
   final commentTextController = TextEditingController();
 
   // open comment box -> user wants to type a new comment
-  void openNewCommentBoc() {
+  void openNewCommentBox() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -146,7 +146,7 @@ class _PostTileState extends State<PostTile> {
               addComment();
               Navigator.of(context).pop();
             },
-            child: const Text("Cancel"),
+            child: const Text("Save"),
           ),
         ],
       ),
@@ -163,6 +163,10 @@ class _PostTileState extends State<PostTile> {
       text: commentTextController.text,
       timestamp: DateTime.now(),
     );
+
+    if (commentTextController.text.isNotEmpty) {
+      postCubit.addComment(widget.post.id, newCommnet);
+    }
   }
 
   @override
@@ -277,9 +281,12 @@ class _PostTileState extends State<PostTile> {
                 ),
 
                 // comment button
-                Icon(Icons.comment),
+                GestureDetector(
+                  onTap: openNewCommentBox,
+                  child: Icon(Icons.comment),
+                ),
 
-                Text("0"),
+                Text(widget.post.comments.length.toString()),
 
                 const Spacer(),
 

@@ -91,6 +91,8 @@ class PostCubit extends Cubit<PostState> {
   Future<void> deleteComment(String postId, String commentId) async {
     try {
       await postRepo.deleteComment(postId, commentId);
+
+      await fetchAllPosts();
     } catch (e) {
       emit(PostsError("Failed to delete comment: $e"));
     }

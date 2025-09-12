@@ -106,7 +106,7 @@ class FirebasePostRepo implements PostRepo {
 
         // update the post documnet in firestore
         await postCollection.doc(postId).update({
-          'comments': post.comments.map((Comment) => comment.toJson()).toList(),
+          'comments': post.comments.map((comment) => comment.toJson()).toList(),
         });
       } else {
         throw Exception("Post not found");

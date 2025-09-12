@@ -12,6 +12,7 @@ import 'package:insta_clone/features/profile/presentation/components/profile_sta
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
 import 'package:insta_clone/features/profile/presentation/pages/edit_profile_page.dart';
+import 'package:insta_clone/features/profile/presentation/pages/follower_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -163,8 +164,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 // profile stats
                 ProfileStats(
                   postCount: postCount,
-                  followersCount: 0,
-                  followingCount: 0,
+                  followersCount: user.followers.length,
+                  followingCount: user.following.length,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          FollowerPage(followers: [], following: []),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 25),

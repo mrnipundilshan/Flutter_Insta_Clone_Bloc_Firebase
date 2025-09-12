@@ -20,12 +20,14 @@ class ProfileStats extends StatelessWidget {
   final int postCount;
   final int followersCount;
   final int followingCount;
+  final void Function()? onTap;
 
   const ProfileStats({
     super.key,
     required this.postCount,
     required this.followersCount,
     required this.followingCount,
+    required this.onTap,
   });
 
   // Build UI
@@ -42,42 +44,45 @@ class ProfileStats extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // posts
-        SizedBox(
-          width: 100,
-          child: Column(
-            children: [
-              Text(postCount.toString(), style: textStyleForCount),
-              Text("Posts", style: textStyleForText),
-            ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // posts
+          SizedBox(
+            width: 100,
+            child: Column(
+              children: [
+                Text(postCount.toString(), style: textStyleForCount),
+                Text("Posts", style: textStyleForText),
+              ],
+            ),
           ),
-        ),
 
-        // followers
-        SizedBox(
-          width: 100,
-          child: Column(
-            children: [
-              Text(followersCount.toString(), style: textStyleForCount),
-              Text("Followers", style: textStyleForText),
-            ],
+          // followers
+          SizedBox(
+            width: 100,
+            child: Column(
+              children: [
+                Text(followersCount.toString(), style: textStyleForCount),
+                Text("Followers", style: textStyleForText),
+              ],
+            ),
           ),
-        ),
 
-        // following
-        SizedBox(
-          width: 100,
-          child: Column(
-            children: [
-              Text(followingCount.toString(), style: textStyleForCount),
-              Text("Following", style: textStyleForText),
-            ],
+          // following
+          SizedBox(
+            width: 100,
+            child: Column(
+              children: [
+                Text(followingCount.toString(), style: textStyleForCount),
+                Text("Following", style: textStyleForText),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
 import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:insta_clone/features/post/presentation/components/post_tile.dart';
+import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
+import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/presentation/components/bio_box.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_state.dart';
@@ -22,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late final authCubit = context.read<AuthCubit>();
   late final profileCubit = context.read<ProfileCubit>();
 
-  //
+  // on startup
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // current user
   late AppUser? currentUser = authCubit.currentUser;
+
+  // posts
+  int postCount = 0;
 
   //build ui
   @override
@@ -65,13 +71,15 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             // body
-            body: Column(
+            body: ListView(
               children: [
                 // email
-                Text(
-                  user.email,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
+                Center(
+                  child: Text(
+                    user.email,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ),
 
@@ -140,6 +148,45 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 10),
+
+                // list of posts from this user
+                BlocBuilder<PostCubit, PostState>(
+                  builder: (context, state) {
+                    // post loaded
+                    if (state is PostsLoaded) {
+                      // filter post by user id
+                      final userPosts = state.posts
+                          .where((post) => post.userId == widget.uid)
+                          .toList();
+
+                      postCount = userPosts.length;
+
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: postCount,
+                        itemBuilder: (context, index) {
+                          // get individual post
+                          final post = userPosts[index];
+
+                          // return as post tile ui
+                          return PostTile(
+                            post: post,
+                            onDeletePressed: () =>
+                                context.read<PostCubit>().deletePost(post.id),
+                          );
+                        },
+                      );
+                    }
+                    // posts loading
+                    else if (state is PostsLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      return const Center(child: Text("No Posts.."));
+                    }
+                  },
                 ),
               ],
             ),

@@ -11,6 +11,7 @@ import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/domain/entities/profile_user.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/pages/profile_page.dart';
 
 class PostTile extends StatefulWidget {
   final Post post;
@@ -160,8 +161,8 @@ class _PostTileState extends State<PostTile> {
     final newCommnet = Comment(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       postId: widget.post.id,
-      userId: widget.post.userId,
-      userName: widget.post.userName,
+      userId: currentUser!.uid,
+      userName: currentUser!.name,
       text: commentTextController.text,
       timestamp: DateTime.now(),
     );
@@ -191,33 +192,47 @@ class _PostTileState extends State<PostTile> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // profile pic
-                postUser?.profileImageUrl != null
-                    ? CachedNetworkImage(
-                        imageUrl: postUser!.profileImageUrl,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.person),
-                        imageBuilder: (context, imageProvider) => Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProfilePage(uid: widget.post.userId),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      postUser?.profileImageUrl != null
+                          ? CachedNetworkImage(
+                              imageUrl: postUser!.profileImageUrl,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.person),
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                            )
+                          : const Icon(Icons.person),
+
+                      const SizedBox(width: 10),
+
+                      // name
+                      Text(
+                        widget.post.userName,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
                         ),
-                      )
-                    : const Icon(Icons.person),
-
-                const SizedBox(width: 10),
-
-                // name
-                Text(
-                  widget.post.userName,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
+                      ),
+                    ],
                   ),
                 ),
 

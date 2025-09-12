@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/auth/domain/entities/app_user.dart';
 import 'package:insta_clone/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:insta_clone/features/post/domain/entities/comment.dart';
+import 'package:insta_clone/features/post/presentation/cubit/post_cubit.dart';
 
 class CommentTile extends StatefulWidget {
   final Comment comment;
@@ -30,10 +31,39 @@ class _CommentTileState extends State<CommentTile> {
     isOwnPost = (widget.comment.userId == currentUser!.uid);
   }
 
+  // show options for comment deletion
+  void showOption() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete Commet?"),
+        actions: [
+          // cancel button
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Cancel"),
+          ),
+
+          // delete button
+          TextButton(
+            onPressed: () {
+              context.read<PostCubit>().deleteComment(
+                widget.comment.postId,
+                widget.comment.id,
+              );
+              Navigator.of(context).pop();
+            },
+            child: const Text("Delete"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: [
           // name
@@ -46,6 +76,18 @@ class _CommentTileState extends State<CommentTile> {
 
           // comment text
           Text(widget.comment.text),
+
+          const Spacer(),
+
+          // delete button
+          if (isOwnPost)
+            GestureDetector(
+              onTap: showOption,
+              child: Icon(
+                Icons.more_horiz,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
         ],
       ),
     );

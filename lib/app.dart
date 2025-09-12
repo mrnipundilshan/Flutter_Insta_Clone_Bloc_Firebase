@@ -12,8 +12,6 @@ import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.d
 import 'package:insta_clone/features/search/data/firebase_search_repo.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_cubit.dart';
 import 'package:insta_clone/features/storage/data/firebase_storage_repo.dart';
-import 'package:insta_clone/themes/dark_mode.dart';
-import 'package:insta_clone/themes/light_mode.dart';
 import 'package:insta_clone/themes/theme_cubit.dart';
 
 /*
@@ -89,34 +87,40 @@ class MainApp extends StatelessWidget {
         // theme cubit
         BlocProvider(create: (context) => ThemeCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightMode,
-        home: BlocConsumer<AuthCubit, AuthState>(
-          //listen for the errors
-          listener: (context, state) {
-            if (state is AuthError) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
-            }
-          },
-          builder: (context, authstate) {
-            print(authstate);
-            // if unauthenticated -> auth page (login/register)
-            if (authstate is Unauthenticated) {
-              return const AuthPage();
-            }
-            if (authstate is Authenticated) {
-              return const HomePage();
-            }
-            //loading
-            else {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            }
-          },
+
+      // bloc builder: themes
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, currentTheme) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: currentTheme,
+
+          // bloc builder: check current auth state
+          home: BlocConsumer<AuthCubit, AuthState>(
+            //listen for the errors
+            listener: (context, state) {
+              if (state is AuthError) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
+              }
+            },
+            builder: (context, authstate) {
+              print(authstate);
+              // if unauthenticated -> auth page (login/register)
+              if (authstate is Unauthenticated) {
+                return const AuthPage();
+              }
+              if (authstate is Authenticated) {
+                return const HomePage();
+              }
+              //loading
+              else {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

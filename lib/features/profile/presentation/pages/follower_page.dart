@@ -5,9 +5,9 @@ This page will display a tab babr to show
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
+import 'package:insta_clone/features/profile/presentation/pages/user_tile.dart';
 
 class FollowerPage extends StatelessWidget {
   final List<String> followers;
@@ -27,8 +27,12 @@ class FollowerPage extends StatelessWidget {
       child: Scaffold(
         // app bar
         appBar: AppBar(
+          // tab bar
           bottom: TabBar(
-            tabs: [
+            dividerColor: Colors.transparent,
+            labelColor: Theme.of(context).colorScheme.inversePrimary,
+            unselectedLabelColor: Theme.of(context).colorScheme.primary,
+            tabs: const [
               Tab(text: "Followers"),
               Tab(text: "Following"),
             ],
@@ -66,7 +70,7 @@ class FollowerPage extends StatelessWidget {
                   // user loaded
                   if (snapshot.hasData) {
                     final user = snapshot.data!;
-                    return ListTile(title: Text(user.name));
+                    return UserTile(user: user);
                   }
                   // loading
                   else if (snapshot.connectionState ==

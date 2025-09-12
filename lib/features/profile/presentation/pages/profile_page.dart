@@ -169,8 +169,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          FollowerPage(followers: [], following: []),
+                      builder: (context) => FollowerPage(
+                        followers: user.followers,
+                        following: user.following,
+                      ),
                     ),
                   ),
                 ),

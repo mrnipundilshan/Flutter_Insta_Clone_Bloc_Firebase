@@ -22,14 +22,14 @@ class Comment {
     return {
       'id': id,
       'postId': postId,
-      'username': userId,
+      'userId': userId,
       'userName': userName,
       'text': text,
       'timestamp': Timestamp.fromDate(timestamp),
     };
   }
 
-  // convert jsong -> comment
+  // convert json -> comment
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
       id: json['id'],

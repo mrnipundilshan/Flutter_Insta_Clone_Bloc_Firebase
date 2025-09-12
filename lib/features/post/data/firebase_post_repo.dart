@@ -82,7 +82,7 @@ class FirebasePostRepo implements PostRepo {
         }
 
         // update thepost document with the new like list
-        await postCollection.doc(postId).update({'Likes': post.likes});
+        await postCollection.doc(postId).update({'likes': post.likes});
       } else {
         throw Exception("Post not found");
       }

@@ -61,6 +61,7 @@ class _SearchPageState extends State<SearchPage> {
 
             // users
             return ListView.builder(
+              itemCount: state.users.length,
               itemBuilder: (context, index) {
                 final user = state.users[index];
                 return UserTile(user: user!);

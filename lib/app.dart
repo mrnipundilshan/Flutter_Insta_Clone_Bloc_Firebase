@@ -12,7 +12,9 @@ import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.d
 import 'package:insta_clone/features/search/data/firebase_search_repo.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_cubit.dart';
 import 'package:insta_clone/features/storage/data/firebase_storage_repo.dart';
+import 'package:insta_clone/themes/dark_mode.dart';
 import 'package:insta_clone/themes/light_mode.dart';
+import 'package:insta_clone/themes/theme_cubit.dart';
 
 /*
   App - Root Level
@@ -79,10 +81,13 @@ class MainApp extends StatelessWidget {
           ),
         ),
 
-        //search cubit
+        // search cubit
         BlocProvider(
           create: (context) => SearchCubit(searchRepo: firebaseSearchRepo),
         ),
+
+        // theme cubit
+        BlocProvider(create: (context) => ThemeCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

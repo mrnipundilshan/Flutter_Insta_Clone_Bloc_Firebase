@@ -69,13 +69,24 @@ class _CommentTileState extends State<CommentTile> {
           // name
           Text(
             widget.comment.userName,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.inversePrimary,
+              fontSize: 12,
+            ),
           ),
 
           const SizedBox(width: 10),
 
           // comment text
-          Text(widget.comment.text),
+          Text(
+            widget.comment.text,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 12,
+            ),
+          ),
 
           const Spacer(),
 

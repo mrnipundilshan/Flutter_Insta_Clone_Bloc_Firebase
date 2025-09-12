@@ -251,6 +251,35 @@ class _PostTileState extends State<PostTile> {
             ),
           ),
 
+          // caption
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Row(
+              children: [
+                // username
+                // Text(
+                //   widget.post.userName,
+                //   style: TextStyle(
+                //     fontWeight: FontWeight.bold,
+                //     color: Theme.of(context).colorScheme.inversePrimary,
+                //     fontSize: 14,
+                //   ),
+                // ),
+                const SizedBox(width: 10),
+
+                // text
+                Text(
+                  widget.post.text,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           // image
           CachedNetworkImage(
             imageUrl: widget.post.imageUrl,
@@ -300,34 +329,30 @@ class _PostTileState extends State<PostTile> {
                 // comment button
                 GestureDetector(
                   onTap: openNewCommentBox,
-                  child: Icon(Icons.comment),
+                  child: Icon(
+                    Icons.comment,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
 
-                Text(widget.post.comments.length.toString()),
+                Text(
+                  widget.post.comments.length.toString(),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 12,
+                  ),
+                ),
 
                 const Spacer(),
 
                 // timestamp
-                Text(widget.post.timestamp.toString()),
-              ],
-            ),
-          ),
-
-          // caption
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              children: [
-                // username
                 Text(
-                  widget.post.userName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  widget.post.timestamp.toString(),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 12,
+                  ),
                 ),
-
-                const SizedBox(width: 10),
-
-                // text
-                Text(widget.post.text),
               ],
             ),
           ),

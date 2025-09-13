@@ -65,7 +65,9 @@ A **feature-rich social media application** built with **Flutter**, **Firebase**
   </tr>
   <!-- Row 3 -->
   <tr>
-    <td colspan = 3><img src="./assets/ss/7.png" width="600" alt="Screenshot 6"></td>
+    <td><img src="./assets/ss/7.png" width="200" alt="Screenshot 1"></td>
+    <td><img src="./assets/ss/8.png" width="200" alt="Screenshot 2"></td>
+    <td><img src="./assets/ss/9.png" width="200" alt="Screenshot 3"></td>
   </tr>
 </table>
 

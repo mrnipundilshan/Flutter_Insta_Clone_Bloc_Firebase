@@ -18,7 +18,7 @@ class SearchCubit extends Cubit<SearchState> {
       final users = await searchRepo.searchUsers(query);
       emit(SearchLoaded(users));
     } catch (e) {
-      emit(SearchError("Error fetching search rseult"));
+      emit(SearchError("Error fetching search result"));
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_clone/features/profile/presentation/components/user_tile.dart';
+import 'package:insta_clone/features/search/presentation/components/user_tile.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_cubit.dart';
 import 'package:insta_clone/features/search/presentation/cubits/search_state.dart';
 import 'package:insta_clone/responsive/constrained_scaffold.dart';
@@ -44,6 +44,9 @@ class _SearchPageState extends State<SearchPage> {
         // search app field
         title: TextField(
           controller: searchController,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary, // <- text color
+          ),
           decoration: InputDecoration(
             hintText: "Search users..",
             hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),

@@ -7,7 +7,7 @@ This page will display a tab babr to show
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
-import 'package:insta_clone/features/profile/presentation/components/user_tile.dart';
+import 'package:insta_clone/features/search/presentation/components/user_tile.dart';
 import 'package:insta_clone/responsive/constrained_scaffold.dart';
 
 class FollowerPage extends StatelessWidget {

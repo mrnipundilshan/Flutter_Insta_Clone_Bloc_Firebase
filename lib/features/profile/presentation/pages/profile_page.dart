@@ -136,8 +136,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   imageUrl: user.profileImageUrl,
 
                   // loading
-                  placeholder: (contextm, url) =>
-                      const CircularProgressIndicator(),
+                  placeholder: (context, url) => const SizedBox(
+                    width: 120, // same as your profile pic size
+                    height: 120,
+                    child: Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
 
                   // error -> failed to load
                   errorWidget: (context, url, error) => Icon(
@@ -163,19 +168,31 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 25),
 
                 // profile stats
-                ProfileStats(
-                  postCount: postCount,
-                  followersCount: user.followers.length,
-                  followingCount: user.following.length,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FollowerPage(
-                        followers: user.followers,
-                        following: user.following,
+                BlocSelector<PostCubit, PostState, int>(
+                  selector: (state) {
+                    if (state is PostsLoaded) {
+                      return state.posts
+                          .where((post) => post.userId == widget.uid)
+                          .length;
+                    }
+                    return 0;
+                  },
+                  builder: (context, postCount) {
+                    return ProfileStats(
+                      postCount: postCount,
+                      followersCount: user.followers.length,
+                      followingCount: user.following.length,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FollowerPage(
+                            followers: user.followers,
+                            following: user.following,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 25),

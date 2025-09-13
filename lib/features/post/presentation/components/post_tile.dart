@@ -12,6 +12,7 @@ import 'package:insta_clone/features/post/presentation/cubit/post_state.dart';
 import 'package:insta_clone/features/profile/domain/entities/profile_user.dart';
 import 'package:insta_clone/features/profile/presentation/cubits/profile_cubit.dart';
 import 'package:insta_clone/features/profile/presentation/pages/profile_page.dart';
+import 'package:intl/intl.dart';
 
 class PostTile extends StatefulWidget {
   final Post post;
@@ -347,7 +348,7 @@ class _PostTileState extends State<PostTile> {
 
                 // timestamp
                 Text(
-                  widget.post.timestamp.toString(),
+                  DateFormat('yyyy-MM-dd HH:mm').format(widget.post.timestamp),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
                     fontSize: 12,

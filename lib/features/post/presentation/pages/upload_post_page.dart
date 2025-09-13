@@ -158,11 +158,16 @@ class _UploadPostPageState extends State<UploadPostPage> {
               child: const Text("Pick Image"),
             ),
 
+            SizedBox(height: 25),
+
             // caption text box
-            MyTextField(
-              controller: textController,
-              hintText: "Caption",
-              obsecureText: false,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: MyTextField(
+                controller: textController,
+                hintText: "Caption",
+                obsecureText: false,
+              ),
             ),
           ],
         ),

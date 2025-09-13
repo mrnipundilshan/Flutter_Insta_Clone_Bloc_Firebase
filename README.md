@@ -69,6 +69,16 @@ A **feature-rich social media application** built with **Flutter**, **Firebase**
     <td><img src="./assets/ss/8.png" width="200" alt="Screenshot 2"></td>
     <td><img src="./assets/ss/9.png" width="200" alt="Screenshot 3"></td>
   </tr>
+  <!-- Row 4 -->
+  <tr>
+    <td><img src="./assets/ss/10.png" width="200" alt="Screenshot 1"></td>
+    <td><img src="./assets/ss/11.png" width="200" alt="Screenshot 2"></td>
+    <td><img src="./assets/ss/12.png" width="200" alt="Screenshot 3"></td>
+  </tr>
+  <!-- Row 5 -->
+  <tr>
+    <td><img src="./assets/ss/13.png" width="200" alt="Screenshot 1"></td>
+  </tr>
 </table>
 
 ---

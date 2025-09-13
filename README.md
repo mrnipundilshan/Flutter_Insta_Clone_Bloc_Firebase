@@ -96,5 +96,5 @@ A **feature-rich social media application** built with **Flutter**, **Firebase**
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/mrnipundilshan/social-app.git
+git clone https://github.com/mrnipundilshan/Flutter_Insta_Clone_Bloc_Firebase.git
 ```
